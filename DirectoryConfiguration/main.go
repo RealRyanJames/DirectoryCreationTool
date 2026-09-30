@@ -1,6 +1,7 @@
 package main
 
 import (
+	userdata "FileDirectoryCreation/UserData"
 	parsing_data_from_json "FileDirectoryCreation/json/Parsing"
 	"container/list"
 	"encoding/json"
@@ -69,7 +70,18 @@ func main() {
 
 	for i := range 1 {
 		i += 1
+
 		if i == 1 {
+
+			UserNameObject := userdata.UserData{
+				GetUsername: func() string {
+					return "User"
+				},
+
+				USERNAME: strings.ToUpper("User"),
+			}
+
+			fmt.Println(UserNameObject.Get())
 
 			routeValueOptions := RouteInputLayer{
 				isLayerComplete: true,
