@@ -1,6 +1,7 @@
 package main
 
 import (
+	linesui "FileDirectoryCreation/LinesUI"
 	userdata "FileDirectoryCreation/UserData"
 	parsing_data_from_json "FileDirectoryCreation/json/Parsing"
 	"container/list"
@@ -73,6 +74,14 @@ func main() {
 
 		if i == 1 {
 
+			LinesUI := linesui.LinesUIState{
+				LinesUI: "-",
+			}
+
+			LinesUI.GetLines = func() string {
+				return LinesUI.LinesUI
+			}
+
 			UserNameObject := userdata.UserData{
 				GetUsername: func() string {
 					return "User"
@@ -104,12 +113,25 @@ func main() {
 				fmt.Println("Error Has Not Found Json File to Parse Data")
 			}
 
+			for i := 0; i < int(LinesUI.GetLinesLength()*2); i++ {
+				fmt.Print(LinesUI.GetLines())
+			}
+
+			fmt.Println("")
+
 			if data.IsDataFinal == false {
 				fmt.Println("Welcome to:", data.PrintElement())
 				fmt.Println("Current Version:", data.GetVersion())
 			}
 
 			fmt.Println(routeValueOptions.GetValue())
+
+			for i := 0; i < int(LinesUI.GetLinesLength()*2); i++ {
+				fmt.Print(LinesUI.GetLines())
+			}
+
+			fmt.Println("")
+
 			fmt.Scanln(&inputUser)
 
 			if inputUser == "/O" || inputUser == "/o" {
