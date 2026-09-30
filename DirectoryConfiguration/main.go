@@ -1,12 +1,15 @@
 package main
 
 import (
+	parsing_data_from_json "FileDirectoryCreation/json/Parsing"
 	"container/list"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -56,6 +59,10 @@ const (
 	CS int = 2
 )
 
+func isNil(err error) bool {
+	return err != nil
+}
+
 func main() {
 
 	inputUser := ""
@@ -66,6 +73,24 @@ func main() {
 		GetValue: func() string {
 			return strings.ToUpper("Enter Name | Route: ")
 		},
+	}
+
+	content, err := os.ReadFile("../json/Config.json")
+
+	if isNil(err) {
+		fmt.Println("Error Has Not Found Json File to Parse Data")
+	}
+
+	var data parsing_data_from_json.DataTypedMesh
+	err = json.Unmarshal(content, &data)
+
+	if isNil(err) {
+		fmt.Println("Error Has Not Found Json File to Parse Data")
+	}
+
+	if data.IsDataFinal == false {
+		fmt.Println("Welcome to:", data.PrintElement())
+		fmt.Println("Current Version:", data.GetVersion())
 	}
 
 	fmt.Println(routeValueOptions.GetValue())
@@ -192,6 +217,9 @@ func main() {
 				}
 			}
 		}
+
+		time.Sleep(2 * time.Second)
+		fmt.Println("Current Version:", data.GetMesh())
 
 	}
 
