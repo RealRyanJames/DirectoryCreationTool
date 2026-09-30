@@ -67,160 +67,166 @@ func main() {
 
 	inputUser := ""
 
-	routeValueOptions := RouteInputLayer{
-		isLayerComplete: true,
+	for i := range 1 {
+		i += 1
+		if i == 1 {
 
-		GetValue: func() string {
-			return strings.ToUpper("Enter Name | Route: ")
-		},
-	}
+			routeValueOptions := RouteInputLayer{
+				isLayerComplete: true,
 
-	content, err := os.ReadFile("../json/Config.json")
+				GetValue: func() string {
+					return strings.ToUpper("Enter Name | Route: ")
+				},
+			}
 
-	if isNil(err) {
-		fmt.Println("Error Has Not Found Json File to Parse Data")
-	}
+			content, err := os.ReadFile("../json/Config.json")
 
-	var data parsing_data_from_json.DataTypedMesh
-	err = json.Unmarshal(content, &data)
+			if isNil(err) {
+				fmt.Println("Error Has Not Found Json File to Parse Data")
+			}
 
-	if isNil(err) {
-		fmt.Println("Error Has Not Found Json File to Parse Data")
-	}
+			var data parsing_data_from_json.DataTypedMesh
+			err = json.Unmarshal(content, &data)
 
-	if data.IsDataFinal == false {
-		fmt.Println("Welcome to:", data.PrintElement())
-		fmt.Println("Current Version:", data.GetVersion())
-	}
+			if isNil(err) {
+				fmt.Println("Error Has Not Found Json File to Parse Data")
+			}
 
-	fmt.Println(routeValueOptions.GetValue())
-	fmt.Scanln(&inputUser)
+			if data.IsDataFinal == false {
+				fmt.Println("Welcome to:", data.PrintElement())
+				fmt.Println("Current Version:", data.GetVersion())
+			}
 
-	if inputUser == "/O" || inputUser == "/o" {
-		fmt.Printf("Language Index: %d, Language: %s\n", JS, "JS")
-		fmt.Printf("Language Index: %d, Language: %s\n", RS, "RS")
-		fmt.Printf("Language Index: %d, Language: %s\n", CS, "CS")
+			fmt.Println(routeValueOptions.GetValue())
+			fmt.Scanln(&inputUser)
 
-		fmt.Scanln()
-	}
+			if inputUser == "/O" || inputUser == "/o" {
+				fmt.Printf("Language Index: %d, Language: %s\n", JS, "JS")
+				fmt.Printf("Language Index: %d, Language: %s\n", RS, "RS")
+				fmt.Printf("Language Index: %d, Language: %s\n", CS, "CS")
 
-	if val, err := strconv.ParseBool(isDirectoryWritten); err != nil {
-		fmt.Printf("%v", val)
-	}
+				fmt.Scanln()
+			}
 
-	routeValue := RouteInputLayer{
-		isLayerComplete: true,
+			if val, err := strconv.ParseBool(isDirectoryWritten); err != nil {
+				fmt.Printf("%v", val)
+			}
 
-		GetValue: func() string {
-			return strings.ToUpper("Enter Name of Directory: ")
-		},
-	}
+			routeValue := RouteInputLayer{
+				isLayerComplete: true,
 
-	fmt.Println(routeValue.GetValue())
-	fmt.Scanln(&inputUser)
+				GetValue: func() string {
+					return strings.ToUpper("Enter Name of Directory: ")
+				},
+			}
 
-	if inputUser == "DIR" {
+			fmt.Println(routeValue.GetValue())
+			fmt.Scanln(&inputUser)
 
-		routeValue := RouteInputLayer{
-			isLayerComplete: true,
+			if inputUser == "DIR" {
 
-			GetValue: func() string {
-				return strings.ToUpper("Enter Directory Route | /o: ")
-			},
+				routeValue := RouteInputLayer{
+					isLayerComplete: true,
+
+					GetValue: func() string {
+						return strings.ToUpper("Enter Directory Route | /o: ")
+					},
+				}
+
+				fmt.Println(routeValue.GetValue())
+				fmt.Scanln(&inputUser)
+
+				switch inputUser {
+				case "JS":
+
+					l := list.New()
+					l.PushFront(routeValue.Get())
+
+					for el := l.Front(); el != nil; el = el.Next() {
+						if el.Value == bool(true) {
+
+							os.Mkdir("src", 0755)
+							os.Mkdir("images", 0755)
+							os.Mkdir("backend", 0755)
+							fmt.Println("[DIRECTORY CREATED]: ", "src")
+							fmt.Println("[DIRECTORY CREATED]: ", "images")
+							fmt.Println("[DIRECTORY CREATED]: ", "images")
+
+						}
+					}
+
+				case "RS":
+					l := list.New()
+					l.PushFront(routeValue.Get())
+
+					for el := l.Front(); el != nil; el = el.Next() {
+						if el.Value == bool(true) {
+
+							routeValue := RouteInputLayer{
+								isLayerComplete: true,
+
+								GetValue: func() string {
+									return strings.ToUpper("Enter Full Stack | /o: ")
+								},
+							}
+
+							fmt.Println(routeValue.GetValue())
+							fmt.Scanln(&inputUser)
+
+							if inputUser == "Fullstack" {
+
+								os.Mkdir("./Frontend/src", 0755)
+								os.Mkdir("./img/images", 0755)
+								os.Mkdir("./Backend/backend", 0755)
+								fmt.Println("[DIRECTORY CREATED]: ", "JS")
+							} else {
+								os.Mkdir("./src", 0755)
+								fmt.Println("[DIRECTORY CREATED]: ", "JS")
+							}
+
+						}
+
+					}
+
+				case "CS":
+					l := list.New()
+					l.PushFront(routeValue.Get())
+
+					for el := l.Front(); el != nil; el = el.Next() {
+						if el.Value == bool(true) {
+							inputUser := ""
+
+							routeValue := RouteInputLayer{
+								isLayerComplete: true,
+
+								GetValue: func() string {
+									return strings.ToUpper("Enter Full Stack | /o: ")
+								},
+							}
+
+							fmt.Println(routeValue.GetValue())
+							fmt.Scanln(&inputUser)
+
+							if inputUser == "Fullstack" {
+
+								os.Mkdir("./Frontend/src", 0755)
+								os.Mkdir("./img/images", 0755)
+								os.Mkdir("./Backend/backend", 0755)
+								fmt.Println("[DIRECTORY CREATED]: ", "CS")
+							} else {
+								os.Mkdir("./src", 0755)
+								fmt.Println("[DIRECTORY CREATED]: ", "CS")
+							}
+
+						}
+					}
+				}
+
+				time.Sleep(2 * time.Second)
+				fmt.Println("Current Version:", data.GetMesh())
+
+			}
+
 		}
-
-		fmt.Println(routeValue.GetValue())
-		fmt.Scanln(&inputUser)
-
-		switch inputUser {
-		case "JS":
-
-			l := list.New()
-			l.PushFront(routeValue.Get())
-
-			for el := l.Front(); el != nil; el = el.Next() {
-				if el.Value == bool(true) {
-
-					os.Mkdir("src", 0755)
-					os.Mkdir("images", 0755)
-					os.Mkdir("backend", 0755)
-					fmt.Println("[DIRECTORY CREATED]: ", "src")
-					fmt.Println("[DIRECTORY CREATED]: ", "images")
-					fmt.Println("[DIRECTORY CREATED]: ", "images")
-
-				}
-			}
-
-		case "RS":
-			l := list.New()
-			l.PushFront(routeValue.Get())
-
-			for el := l.Front(); el != nil; el = el.Next() {
-				if el.Value == bool(true) {
-
-					routeValue := RouteInputLayer{
-						isLayerComplete: true,
-
-						GetValue: func() string {
-							return strings.ToUpper("Enter Full Stack | /o: ")
-						},
-					}
-
-					fmt.Println(routeValue.GetValue())
-					fmt.Scanln(&inputUser)
-
-					if inputUser == "Fullstack" {
-
-						os.Mkdir("./Frontend/src", 0755)
-						os.Mkdir("./img/images", 0755)
-						os.Mkdir("./Backend/backend", 0755)
-						fmt.Println("[DIRECTORY CREATED]: ", "JS")
-					} else {
-						os.Mkdir("./src", 0755)
-						fmt.Println("[DIRECTORY CREATED]: ", "JS")
-					}
-
-				}
-
-			}
-
-		case "CS":
-			l := list.New()
-			l.PushFront(routeValue.Get())
-
-			for el := l.Front(); el != nil; el = el.Next() {
-				if el.Value == bool(true) {
-					inputUser := ""
-
-					routeValue := RouteInputLayer{
-						isLayerComplete: true,
-
-						GetValue: func() string {
-							return strings.ToUpper("Enter Full Stack | /o: ")
-						},
-					}
-
-					fmt.Println(routeValue.GetValue())
-					fmt.Scanln(&inputUser)
-
-					if inputUser == "Fullstack" {
-
-						os.Mkdir("./Frontend/src", 0755)
-						os.Mkdir("./img/images", 0755)
-						os.Mkdir("./Backend/backend", 0755)
-						fmt.Println("[DIRECTORY CREATED]: ", "CS")
-					} else {
-						os.Mkdir("./src", 0755)
-						fmt.Println("[DIRECTORY CREATED]: ", "CS")
-					}
-
-				}
-			}
-		}
-
-		time.Sleep(2 * time.Second)
-		fmt.Println("Current Version:", data.GetMesh())
-
 	}
-
 }
