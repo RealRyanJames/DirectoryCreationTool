@@ -133,6 +133,17 @@ func main() {
 			for el := l.Front(); el != nil; el = el.Next() {
 				if el.Value == bool(true) {
 
+					routeValue := RouteInputLayer{
+						isLayerComplete: true,
+
+						GetValue: func() string {
+							return strings.ToUpper("Enter Full Stack | /o: ")
+						},
+					}
+
+					fmt.Println(routeValue.GetValue())
+					fmt.Scanln(&inputUser)
+
 					if inputUser == "Fullstack" {
 
 						os.Mkdir("./Frontend/src", 0755)
@@ -152,17 +163,18 @@ func main() {
 			l := list.New()
 			l.PushFront(routeValue.Get())
 
-			routeValue := RouteInputLayer{
-				isLayerComplete: true,
-
-				GetValue: func() string {
-					return strings.ToUpper("Enter Name | Route: ")
-				},
-			}
-
 			for el := l.Front(); el != nil; el = el.Next() {
 				if el.Value == bool(true) {
 					inputUser := ""
+
+					routeValue := RouteInputLayer{
+						isLayerComplete: true,
+
+						GetValue: func() string {
+							return strings.ToUpper("Enter Full Stack | /o: ")
+						},
+					}
+
 					fmt.Println(routeValue.GetValue())
 					fmt.Scanln(&inputUser)
 
