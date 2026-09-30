@@ -1,6 +1,7 @@
 package main
 
 import (
+	"container/list"
 	"fmt"
 	"log"
 	"os"
@@ -37,6 +38,14 @@ type RouteInputLayer struct {
 	isLayerComplete bool
 }
 
+func (route RouteInputLayer) Get() bool {
+	if route.isLayerComplete {
+		return true
+	}
+
+	return false
+}
+
 func main() {
 
 	routeValue := RouteInputLayer{
@@ -60,12 +69,17 @@ func main() {
 		isWrittenTo: string("true"),
 	}
 
-	strconv.ParseBool(dir.isWrittenTo)
-	err := os.MkdirAll(dir.GetDirectory(), 0755)
+	l := list.New()
+	l.PushFront(routeValue.Get())
 
-	if err != nil {
-		log.Fatal(err)
+	for el := l.Front(); el != nil; el = el.Next() {
+
+		if el.Value == bool(true) {
+
+			os.Mkdir(dir.GetDirectory(), 0755)
+
+			fmt.Println("[DIRECTORY CREATED]: ", dir.GetDirectory())
+		}
 	}
 
-	fmt.Println("[DIRECTORY CREATED]: ", dir.GetDirectory())
 }
